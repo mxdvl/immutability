@@ -1,6 +1,6 @@
 import { useState } from "react";
-import logo from "./assets/hometrack.svg";
 import { uuidv7 } from "uuidv7";
+import { HometrackLogo } from "./hometrack";
 
 const all_status = ["todo", "doing", "done"] as const;
 
@@ -19,7 +19,7 @@ export function Todos() {
     <>
       <header>
         <a href="https://www.hometrack.com" target="_blank">
-          <img src={logo} className="logo" alt="Hometrack logo" />
+          <HometrackLogo />
         </a>
       </header>
       <main>
