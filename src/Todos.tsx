@@ -9,11 +9,10 @@ interface Todo {
   id: string;
   title: string;
   status: (typeof all_status)[number];
-  assignee: string[];
 }
 
 export function Todos() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(INITIAL_LIST);
 
   return (
     <>
@@ -31,7 +30,7 @@ export function Todos() {
             if (!title) return;
             const id = uuidv7();
             setTodos((todos) => {
-              todos.push({ id, title, status: "todo", assignee: [] });
+              todos.push({ id, title, status: "todo" });
               return todos;
             });
           }}
@@ -48,7 +47,11 @@ export function Todos() {
               <ul>
                 {todos.flatMap((todo) =>
                   todo.status === status
-                    ? [<li key={todo.id}>{todo.title}</li>]
+                    ? [
+                        <li key={todo.id} id={todo.id}>
+                          {todo.title}
+                        </li>,
+                      ]
                     : [],
                 )}
               </ul>
@@ -59,3 +62,21 @@ export function Todos() {
     </>
   );
 }
+
+const INITIAL_LIST = [
+  {
+    id: "0199ce67-abcd-0000-0000-000000000001",
+    title: "Prep talk",
+    status: "done",
+  },
+  {
+    id: "0199ce67-abcd-0000-0000-000000000001",
+    title: "Give talk",
+    status: "doing",
+  },
+  {
+    id: "0199ce67-abcd-0000-0000-000000000002",
+    title: "Get feedback",
+    status: "todo",
+  },
+] satisfies Todo[];
