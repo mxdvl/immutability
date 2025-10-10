@@ -1,0 +1,52 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="-10 -25 120 120"
+    width="256"
+    height="256"
+    stroke-width="14"
+    stroke-linecap="round"
+>
+    <rect
+        x="-10"
+        y="-25"
+        width="120"
+        height="120"
+        fill="#273646"
+        rx="30"
+    />
+    <line
+        x1="10"
+        x2="10"
+        y2="53"
+        y1="40"
+        stroke="#f58938"
+    />
+    <line
+        x1="30"
+        x2="30"
+        y2="53"
+        y1="10"
+        stroke="#ffd53e"
+    />
+    <line
+        x1="50"
+        x2="50"
+        y2="53"
+        y1="25"
+        stroke="#1ab061"
+    />
+    <line
+        x1="70"
+        x2="70"
+        y2="53"
+        y1="15"
+        stroke="#4795cd"
+    />
+    <line
+        x1="90"
+        x2="90"
+        y2="53"
+        y1="35"
+        stroke="#9659a1"
+    />
+</svg>
