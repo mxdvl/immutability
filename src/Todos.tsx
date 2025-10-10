@@ -1,8 +1,50 @@
 import { useState } from "react";
 import { uuidv7 } from "uuidv7";
-import { HometrackLogo } from "./hometrack";
 
 const all_status = ["todo", "doing", "done"] as const;
+
+export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
+  const [todos, setTodos] = useState<Todo[]>(initial);
+
+  if (debug) {
+    console.info({ todos });
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          const title = prompt("Title?")?.trim();
+          if (!title) return;
+          const id = uuidv7();
+          setTodos((todos) => {
+            todos.push({ id, title, status: "todo" });
+            return todos;
+          });
+        }}
+      >
+        add
+      </button>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
+        {all_status.map((status) => (
+          <div key={status}>
+            <h3>
+              {status.at(0)?.toUpperCase()}
+              {status.slice(1)}
+            </h3>
+            <ul>
+              {todos.flatMap((todo) =>
+                todo.status === status
+                  ? [<Todo key={todo.id} todo={todo} />]
+                  : [],
+              )}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
 
 interface Todo {
   /** must be unique! */
@@ -11,72 +53,19 @@ interface Todo {
   status: (typeof all_status)[number];
 }
 
-export function Todos() {
-  const [todos, setTodos] = useState<Todo[]>(INITIAL_LIST);
-
+function Todo({ todo }: { todo: Todo }) {
   return (
-    <>
-      <header>
-        <a href="https://www.hometrack.com" target="_blank">
-          <HometrackLogo />
-        </a>
-      </header>
-      <main>
-        <h1>On the merits of Immutability</h1>
-        <h2>Todo List</h2>
-        <button
-          onClick={() => {
-            const title = prompt("Title?")?.trim();
-            if (!title) return;
-            const id = uuidv7();
-            setTodos((todos) => {
-              todos.push({ id, title, status: "todo" });
-              return todos;
-            });
-          }}
-        >
-          add
-        </button>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
-          {all_status.map((status) => (
-            <div key={status}>
-              <h3>
-                {status.at(0)?.toUpperCase()}
-                {status.slice(1)}
-              </h3>
-              <ul>
-                {todos.flatMap((todo) =>
-                  todo.status === status
-                    ? [
-                        <li key={todo.id} id={todo.id}>
-                          {todo.title}
-                        </li>,
-                      ]
-                    : [],
-                )}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </main>
-    </>
+    <li key={todo.id} id={todo.id}>
+      {todo.title}{" "}
+      <button
+        onClick={() => {
+          const title = prompt("Rename", todo.title)?.trim();
+          if (!title) return;
+          todo.title = title;
+        }}
+      >
+        ✐
+      </button>
+    </li>
   );
 }
-
-const INITIAL_LIST = [
-  {
-    id: "0199ce67-abcd-0000-0000-000000000001",
-    title: "Prep talk",
-    status: "done",
-  },
-  {
-    id: "0199ce67-abcd-0000-0000-000000000001",
-    title: "Give talk",
-    status: "doing",
-  },
-  {
-    id: "0199ce67-abcd-0000-0000-000000000002",
-    title: "Get feedback",
-    status: "todo",
-  },
-] satisfies Todo[];

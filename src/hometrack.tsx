@@ -3,7 +3,7 @@ export function HometrackLogo() {
     <svg
       width="200"
       height="27"
-      stroke-linecap="round"
+      strokeLinecap="round"
       aria-label="Hometrack logo"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -45,7 +45,7 @@ export function HometrackLogo() {
           d="m196.6 24.95-6.12-7.2v7.2h-2.65V3.4h2.65v12.52l6-6.96h3.2l-7.15 7.95 7.33 8.04h-3.27Z"
         />
       </g>
-      <g transform="scale(0.38) translate(-1 7)" stroke-width="14">
+      <g transform="scale(0.38) translate(-1 7)" strokeWidth="14">
         <line x1="10" x2="10" y2="53" y1="40" stroke="#f58938" />
         <line x1="30" x2="30" y2="53" y1="10" stroke="#ffd53e" />
         <line x1="50" x2="50" y2="53" y1="25" stroke="#1ab061" />
