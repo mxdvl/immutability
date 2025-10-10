@@ -7,7 +7,7 @@ export function HometrackLogo() {
       aria-label="Hometrack logo"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g fill="white">
+      <g fill="currentColor">
         <path
           data-letter="h"
           d="M58.63 10.5a7.17 7.17 0 0 1 1.71 5.16v9.29H57.7V15.9a5.11 5.11 0 0 0-1.22-3.67 4.36 4.36 0 0 0-3.32-1.28 4.55 4.55 0 0 0-3.49 1.4 5.84 5.84 0 0 0-1.3 4.12v8.48H45.7V3.4h2.65v9.35a5.46 5.46 0 0 1 2.13-3 6.33 6.33 0 0 1 3.6-1.07 5.98 5.98 0 0 1 4.55 1.82Z"

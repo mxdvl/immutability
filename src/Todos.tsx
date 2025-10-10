@@ -7,7 +7,7 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
   const [todos, setTodos] = useState<Todo[]>(initial);
 
   if (debug) {
-    console.info({ todos });
+    console.info("todos", todos);
   }
 
   return (
@@ -25,7 +25,7 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
       >
         add
       </button>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
+      <div id="todos">
         {all_status.map((status) => (
           <div key={status}>
             <h3>
@@ -35,7 +35,7 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
             <ul>
               {todos.flatMap((todo) =>
                 todo.status === status
-                  ? [<Todo key={todo.id} todo={todo} />]
+                  ? [<Todo key={todo.id} todo={todo} debug={debug} />]
                   : [],
               )}
             </ul>
@@ -53,7 +53,10 @@ interface Todo {
   status: (typeof all_status)[number];
 }
 
-function Todo({ todo }: { todo: Todo }) {
+function Todo({ todo, debug }: { todo: Todo; debug: boolean }) {
+  if (debug) {
+    console.log("todo", todo);
+  }
   return (
     <li key={todo.id} id={todo.id}>
       {todo.title}{" "}
@@ -64,7 +67,7 @@ function Todo({ todo }: { todo: Todo }) {
           todo.title = title;
         }}
       >
-        ✐
+        ✎
       </button>
     </li>
   );

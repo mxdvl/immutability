@@ -4,10 +4,18 @@ import { Todos } from "./Todos";
 
 export function Page() {
   const [debug, setDebug] = useState(false);
+
+  if (!debug) {
+    console.clear();
+  }
   return (
     <>
       <header>
-        <a href="https://www.hometrack.com" target="_blank">
+        <a
+          href="https://www.hometrack.com"
+          target="_blank"
+          style={{ color: "inherit" }}
+        >
           <HometrackLogo />
         </a>
         <label>
