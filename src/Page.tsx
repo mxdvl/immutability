@@ -46,13 +46,13 @@ export function Page() {
               priority: "high",
             },
             {
-              id: "uuid-0199ce67-abcd-0000-0000-000000000001",
+              id: "uuid-0199ce67-abcd-0000-0000-000000000002",
               title: "Give talk",
               status: "doing",
               priority: "high",
             },
             {
-              id: "uuid-0199ce67-abcd-0000-0000-000000000002",
+              id: "uuid-0199ce67-abcd-0000-0000-000000000003",
               title: "Get feedback",
               status: "todo",
               priority: "medium",
