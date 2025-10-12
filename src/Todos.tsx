@@ -1,32 +1,61 @@
 import { useState } from "react";
 import { uuidv7 } from "uuidv7";
 
-const all_status = ["todo", "doing", "done"] as const;
+const statuses = ["todo", "doing", "done"] as const;
+const priorities = ["low", "medium", "high"] as const;
 
 export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
   const [todos, setTodos] = useState(initial);
+  const [display, setDisplay] = useState<Todo["priority"][]>([
+    "low",
+    "medium",
+    "high",
+  ]);
 
   if (debug) {
-    console.info("todos", todos);
+    console.debug({ todos, display });
   }
 
   return (
     <>
+      <h2>Controls</h2>
       <button
         onClick={() => {
           const title = prompt("Title?")?.trim();
           if (!title) return;
           const id = uuidv7();
           setTodos((todos) => {
-            todos.push({ id, title, status: "todo" });
+            todos.push({ id, title, status: "todo", priority: "medium" });
             return todos;
           });
         }}
       >
         add
       </button>
+      {priorities.map((priority) => (
+        <label>
+          <input
+            type="checkbox"
+            checked={display.includes(priority)}
+            onChange={() => {
+              setDisplay((previous) => {
+                const index = previous.indexOf(priority);
+                if (index === -1) {
+                  previous.push(priority);
+                } else {
+                  previous.splice(index, 1);
+                }
+
+                return previous;
+              });
+            }}
+          />
+          {priority} (
+          {todos.filter((todo) => todo.priority === priority).length})
+        </label>
+      ))}
       <div id="todos">
-        {all_status.map((status) => (
+        {statuses.map((status) => (
           <div key={status}>
             <h3>
               {status.at(0)?.toUpperCase()}
@@ -60,7 +89,8 @@ interface Todo {
   /** must be unique! */
   id: string;
   title: string;
-  status: (typeof all_status)[number];
+  status: (typeof statuses)[number];
+  priority: (typeof priorities)[number];
 }
 
 function Todo({

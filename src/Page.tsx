@@ -31,7 +31,6 @@ export function Page() {
       </header>
       <main>
         <h1>On the merits of Immutability</h1>
-        <h2>Todo List</h2>
         <Todos
           debug={debug}
           initial={[
@@ -39,16 +38,19 @@ export function Page() {
               id: "0199ce67-abcd-0000-0000-000000000001",
               title: "Prep talk",
               status: "done",
+              priority: "high",
             },
             {
               id: "0199ce67-abcd-0000-0000-000000000001",
               title: "Give talk",
               status: "doing",
+              priority: "high",
             },
             {
               id: "0199ce67-abcd-0000-0000-000000000002",
               title: "Get feedback",
               status: "todo",
+              priority: "medium",
             },
           ]}
         />
