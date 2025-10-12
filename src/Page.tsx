@@ -38,7 +38,12 @@ export function Page() {
         </h1>
         <Todos
           debug={debug}
-          initial={[
+          initialDisplay={{
+            low: false,
+            medium: true,
+            high: true,
+          }}
+          initialTodos={[
             {
               id: "uuid-0199ce67-abcd-0000-0000-000000000001",
               title: "Prep talk",
@@ -56,6 +61,12 @@ export function Page() {
               title: "Get feedback",
               status: "todo",
               priority: "medium",
+            },
+            {
+              id: "uuid-0199ce67-abcd-0000-0000-000000000004",
+              title: "Watch Celebrity Traitors",
+              status: "todo",
+              priority: "low",
             },
           ]}
         />

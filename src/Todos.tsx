@@ -4,13 +4,17 @@ import { uuidv7 } from "uuidv7";
 const statuses = ["todo", "doing", "done"];
 const priorities = ["low", "medium", "high"];
 
-export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
-  const [todos, setTodos] = useState(initial);
-  const [display, setDisplay] = useState<Todo["priority"][]>([
-    "low",
-    "medium",
-    "high",
-  ]);
+export function Todos({
+  initialTodos,
+  initialDisplay,
+  debug,
+}: {
+  initialTodos: Todo[];
+  initialDisplay: Record<Todo["priority"], boolean>;
+  debug: boolean;
+}) {
+  const [todos, setTodos] = useState(initialTodos);
+  const [display, setDisplay] = useState(initialDisplay);
 
   if (debug) {
     console.debug({ todos, display });
@@ -38,19 +42,13 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
         add
       </button>
       {priorities.map((priority) => (
-        <label>
+        <label key={priority}>
           <input
             type="checkbox"
-            checked={display.includes(priority)}
-            onChange={() => {
+            checked={display[priority]}
+            onChange={({ target: { checked } }) => {
               setDisplay((previous) => {
-                const index = previous.indexOf(priority);
-                if (index === -1) {
-                  previous.push(priority);
-                } else {
-                  previous.splice(index, 1);
-                }
-
+                previous[priority] = checked;
                 return previous;
               });
             }}
@@ -68,7 +66,7 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
             </h3>
             <ul>
               {todos.flatMap((todo) =>
-                todo.status === status
+                todo.status === status && display[todo.priority]
                   ? [
                       <Todo
                         key={todo.id}
