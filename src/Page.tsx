@@ -30,7 +30,12 @@ export function Page() {
         </label>
       </header>
       <main>
-        <h1>On the merits of Immutability</h1>
+        <h1>
+          On the merits of{" "}
+          <a href="https://react.dev/reference/rules/components-and-hooks-must-be-pure#props-and-state-are-immutable">
+            Immutability
+          </a>
+        </h1>
         <Todos
           debug={debug}
           initial={[
