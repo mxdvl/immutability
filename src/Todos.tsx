@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { uuidv7 } from "uuidv7";
 
-const statuses = ["todo", "doing", "done"] as const;
-const priorities = ["low", "medium", "high"] as const;
+const statuses = ["todo", "doing", "done"];
+const priorities = ["low", "medium", "high"];
 
 export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
   const [todos, setTodos] = useState(initial);
@@ -23,9 +23,14 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
         onClick={() => {
           const title = prompt("Title?")?.trim();
           if (!title) return;
-          const id = `uuid-${uuidv7()}` as const;
+
           setTodos((todos) => {
-            todos.push({ id, title, status: "todo", priority: "medium" });
+            todos.push({
+              id: `uuid-${uuidv7()}`,
+              title,
+              status: "todo",
+              priority: "medium",
+            });
             return todos;
           });
         }}
@@ -173,5 +178,7 @@ function getPrevNext(
       return { prev: "todo", next: "done" };
     case "done":
       return { prev: "doing", next: undefined };
+    default:
+      return { prev: undefined, next: undefined };
   }
 }
