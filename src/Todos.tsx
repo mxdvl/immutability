@@ -4,7 +4,7 @@ import { uuidv7 } from "uuidv7";
 const all_status = ["todo", "doing", "done"] as const;
 
 export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
-  const [todos, setTodos] = useState<Todo[]>(initial);
+  const [todos, setTodos] = useState(initial);
 
   if (debug) {
     console.info("todos", todos);
@@ -35,7 +35,17 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
             <ul>
               {todos.flatMap((todo) =>
                 todo.status === status
-                  ? [<Todo key={todo.id} todo={todo} debug={debug} />]
+                  ? [
+                      <Todo
+                        key={todo.id}
+                        todo={todo}
+                        debug={debug}
+                        update={(next) => {
+                          if (!debug) return;
+                          console.debug({ todo, next });
+                        }}
+                      />,
+                    ]
                   : [],
               )}
             </ul>
@@ -53,7 +63,15 @@ interface Todo {
   status: (typeof all_status)[number];
 }
 
-function Todo({ todo, debug }: { todo: Todo; debug: boolean }) {
+function Todo({
+  todo,
+  debug,
+  update,
+}: {
+  todo: Todo;
+  debug: boolean;
+  update: (updated: Omit<Todo, "id">) => void;
+}) {
   if (debug) {
     console.log("todo", todo);
   }
@@ -65,6 +83,7 @@ function Todo({ todo, debug }: { todo: Todo; debug: boolean }) {
           const title = prompt("Rename", todo.title)?.trim();
           if (!title) return;
           todo.title = title;
+          update(todo);
         }}
       >
         ✎
