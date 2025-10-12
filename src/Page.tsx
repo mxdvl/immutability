@@ -35,19 +35,19 @@ export function Page() {
           debug={debug}
           initial={[
             {
-              id: "0199ce67-abcd-0000-0000-000000000001",
+              id: "uuid-0199ce67-abcd-0000-0000-000000000001",
               title: "Prep talk",
               status: "done",
               priority: "high",
             },
             {
-              id: "0199ce67-abcd-0000-0000-000000000001",
+              id: "uuid-0199ce67-abcd-0000-0000-000000000001",
               title: "Give talk",
               status: "doing",
               priority: "high",
             },
             {
-              id: "0199ce67-abcd-0000-0000-000000000002",
+              id: "uuid-0199ce67-abcd-0000-0000-000000000002",
               title: "Get feedback",
               status: "todo",
               priority: "medium",

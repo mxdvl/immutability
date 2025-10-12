@@ -23,7 +23,7 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
         onClick={() => {
           const title = prompt("Title?")?.trim();
           if (!title) return;
-          const id = uuidv7();
+          const id = `uuid-${uuidv7()}` as const;
           setTodos((todos) => {
             todos.push({ id, title, status: "todo", priority: "medium" });
             return todos;
@@ -86,8 +86,8 @@ export function Todos({ initial, debug }: { initial: Todo[]; debug: boolean }) {
 }
 
 interface Todo {
-  /** must be unique! */
-  id: string;
+  /** must be unique & valid [`<custom-ident>`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident#forbidden_values) */
+  id: `uuid-${string}`;
   title: string;
   status: (typeof statuses)[number];
   priority: (typeof priorities)[number];
