@@ -105,6 +105,9 @@ function Todo({
   if (debug) {
     console.log("todo", todo);
   }
+
+  const { prev, next } = getPrevNext(todo.status);
+
   return (
     <li key={todo.id} id={todo.id}>
       {todo.title}{" "}
@@ -118,6 +121,57 @@ function Todo({
       >
         ✎
       </button>
+      <div>
+        {priorities.map((priority) => (
+          <label key={priority}>
+            <input
+              type="radio"
+              checked={todo.priority === priority}
+              onChange={({ target: { checked } }) => {
+                if (!checked) return;
+                todo.priority = priority;
+                update(todo);
+              }}
+            />
+            {priority}
+          </label>
+        ))}
+      </div>
+      <div>
+        <button
+          disabled={!prev}
+          onClick={() => {
+            if (!prev) return;
+            todo.status = prev;
+            update(todo);
+          }}
+        >
+          ←
+        </button>
+        <button
+          disabled={!next}
+          onClick={() => {
+            if (!next) return;
+            todo.status = next;
+            update(todo);
+          }}
+        >
+          →
+        </button>
+      </div>
     </li>
   );
+}
+
+function getPrevNext(
+  status: Todo["status"],
+): Record<"prev" | "next", Todo["status"] | undefined> {
+  switch (status) {
+    case "todo":
+      return { prev: undefined, next: "doing" };
+    case "doing":
+      return { prev: "todo", next: "done" };
+    case "done":
+      return { prev: "doing", next: undefined };
+  }
 }
