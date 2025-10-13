@@ -23,40 +23,43 @@ export function Todos({
   return (
     <>
       <h2>Controls</h2>
-      <button
-        onClick={() => {
-          const title = prompt("Title?")?.trim();
-          if (!title) return;
+      <fieldset>
+        <button
+          onClick={() => {
+            const title = prompt("Title?")?.trim();
+            if (!title) return;
 
-          setTodos((todos) => {
-            todos.push({
-              id: `uuid-${uuidv7()}`,
-              title,
-              status: "todo",
-              priority: "medium",
-            });
-            return todos;
-          });
-        }}
-      >
-        add
-      </button>
-      {priorities.map((priority) => (
-        <label key={priority}>
-          <input
-            type="checkbox"
-            checked={display[priority]}
-            onChange={({ target: { checked } }) => {
-              setDisplay((previous) => {
-                previous[priority] = checked;
-                return previous;
+            setTodos((todos) => {
+              todos.push({
+                id: `uuid-${uuidv7()}`,
+                title,
+                status: "todo",
+                priority: "medium",
               });
-            }}
-          />
-          {priority} (
-          {todos.filter((todo) => todo.priority === priority).length})
-        </label>
-      ))}
+              return todos;
+            });
+          }}
+        >
+          add todo
+        </button>
+        <hr />
+        {priorities.map((priority) => (
+          <label key={priority}>
+            <input
+              type="checkbox"
+              checked={display[priority]}
+              onChange={({ target: { checked } }) => {
+                setDisplay((previous) => {
+                  previous[priority] = checked;
+                  return previous;
+                });
+              }}
+            />
+            {priority} (
+            {todos.filter((todo) => todo.priority === priority).length})
+          </label>
+        ))}
+      </fieldset>
       <div id="todos">
         {statuses.map((status) => (
           <div key={status}>
@@ -112,23 +115,32 @@ function Todo({
   const { prev, next } = getPrevNext(todo.status);
 
   return (
-    <li key={todo.id} id={todo.id}>
-      {todo.title}{" "}
-      <button
-        onClick={() => {
-          const title = prompt("Rename", todo.title)?.trim();
-          if (!title) return;
-          todo.title = title;
-          update(todo);
-        }}
-      >
-        ✎
-      </button>
-      <div>
+    <li
+      key={todo.id}
+      id={todo.id}
+      className="todo"
+      data-status={todo.status}
+      data-priority={todo.priority}
+    >
+      <div className="control">
+        {todo.title}
+        <button
+          onClick={() => {
+            const title = prompt("Rename", todo.title)?.trim();
+            if (!title) return;
+            todo.title = title;
+            update(todo);
+          }}
+        >
+          ✎
+        </button>
+      </div>
+      <div className="control">
         {priorities.map((priority) => (
           <label key={priority}>
             <input
               type="radio"
+              disabled={todo.status === "done"}
               checked={todo.priority === priority}
               onChange={({ target: { checked } }) => {
                 if (!checked) return;
@@ -140,7 +152,7 @@ function Todo({
           </label>
         ))}
       </div>
-      <div>
+      <div className="control">
         <button
           disabled={!prev}
           onClick={() => {
