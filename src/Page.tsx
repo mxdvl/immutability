@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { HometrackLogo } from "./hometrack";
 import { Todos } from "./Todos";
+import { QR } from "./qr";
 
 export function Page() {
   const [debug, setDebug] = useState(false);
@@ -30,12 +31,19 @@ export function Page() {
         </label>
       </header>
       <main>
-        <h1>
-          On the merits of{" "}
-          <a href="https://react.dev/reference/rules/components-and-hooks-must-be-pure#props-and-state-are-immutable">
-            Immutability
-          </a>
-        </h1>
+        <div className="intro">
+          <h1>
+            On the merits of{" "}
+            <a href="https://react.dev/reference/rules/components-and-hooks-must-be-pure#props-and-state-are-immutable">
+              Immutability
+            </a>
+          </h1>
+          <QR
+            input="https://forms.gle/esDgbS1gR8FwqnyT6"
+            correction="M"
+            size={80}
+          />
+        </div>
         <Todos
           debug={debug}
           initialDisplay={{
