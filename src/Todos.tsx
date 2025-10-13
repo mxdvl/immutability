@@ -55,8 +55,13 @@ export function Todos({
                 });
               }}
             />
-            {priority} (
-            {todos.filter((todo) => todo.priority === priority).length})
+            {priority}{" "}
+            <span className="count">
+              {todos
+                .filter((todo) => todo.priority === priority)
+                .length.toString()
+                .padStart(2, "0")}
+            </span>
           </label>
         ))}
       </fieldset>
