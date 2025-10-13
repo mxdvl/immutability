@@ -63,6 +63,12 @@ h2 {
     line-height: 1.5rem;
 }
 
+h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1rem;
+}
+
 button {
     border-radius: 4px;
     border: 2px solid transparent;
