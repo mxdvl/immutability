@@ -5,10 +5,12 @@ export function QR({
   input,
   correction,
   size,
+  colour = "currentColor",
 }: Readonly<{
   input: string;
   correction: NonNullable<Parameters<typeof qr>[1]>["correction"];
   size: number;
+  colour?: string;
 }>) {
   const positions = qr(input, { correction }).flatMap((row, x) =>
     row.flatMap((module, y) => (module ? [{ x, y }] : [])),
@@ -29,7 +31,7 @@ export function QR({
           style={{
             gridColumnStart: x + 1,
             gridRowStart: y + 1,
-            background: "currentColor",
+            background: colour,
           }}
         />
       ))}
