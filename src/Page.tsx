@@ -30,7 +30,9 @@ export function Page() {
             disabled={slide === currentSlide}
             onClick={() => {
               document.startViewTransition(() => {
-                flushSync(() => setCurrentSlide(slide));
+                flushSync(() => {
+                  setCurrentSlide(slide);
+                });
               });
             }}
           >

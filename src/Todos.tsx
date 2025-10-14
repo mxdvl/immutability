@@ -80,9 +80,17 @@ export function Todos({
                         key={todo.id}
                         todo={todo}
                         debug={debug}
-                        update={(next) => {
-                          if (!debug) return;
-                          console.debug({ todo, next });
+                        update={(updated) => {
+                          if (!debug) {
+                            console.debug({ todo, next: updated });
+                          }
+                          setTodos((todos) => {
+                            const index = todos.findIndex(
+                              ({ id }) => id === todo.id,
+                            );
+                            todos.splice(index, 1, updated);
+                            return todos;
+                          });
                         }}
                       />,
                     ]
@@ -111,7 +119,7 @@ function Todo({
 }: {
   todo: Todo;
   debug: boolean;
-  update: (updated: Omit<Todo, "id">) => void;
+  update: (updated: Todo) => void;
 }) {
   if (debug) {
     console.log("todo", todo);
