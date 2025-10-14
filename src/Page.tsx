@@ -6,6 +6,9 @@ import { QR } from "./qr";
 
 const slides = ["intro", "demo", "recap"] as const;
 
+/** Feedback Form URL */
+const input = "https://forms.gle/esDgbS1gR8FwqnyT6";
+
 export function Page() {
   const [currentSlide, setCurrentSlide] = useState(
     slides.find((slide) => slide === window.location.pathname.slice(1)) ??
@@ -44,7 +47,7 @@ export function Page() {
         ))}
       </header>
       <main>
-        <div className="intro">
+        <div className="title">
           <h1>
             On the Merits of{" "}
             <a href="https://react.dev/reference/rules/components-and-hooks-must-be-pure#props-and-state-are-immutable">
@@ -52,7 +55,7 @@ export function Page() {
             </a>
           </h1>
           <QR
-            input="https://forms.gle/esDgbS1gR8FwqnyT6"
+            input={input}
             correction="M"
             size={80}
             colour={currentSlide === "recap" ? "var(--faded)" : undefined}
@@ -61,10 +64,16 @@ export function Page() {
         {currentSlide === "intro" && (
           <>
             <h2>Hi, I’m Max Duval – @mxdvl</h2>
-            <p>React borrows from Functional Programming.</p>
-            <p>Single most influential technical concept.</p>
-            <p>Hands-on: all the code will be shared…</p>
-            <p>Stop squashing & start netting!</p>
+            <ul>
+              <li>React &lt;3 Functional Programming</li>
+              <li>
+                Stop <strong>squashing</strong> bugs…
+              </li>
+              <li>
+                …start <strong>netting</strong> instead!
+              </li>
+              <li>Code on Github</li>
+            </ul>
           </>
         )}
         {currentSlide === "demo" && (
@@ -104,15 +113,16 @@ export function Page() {
         )}
         {currentSlide === "recap" && (
           <>
-            <h2>Hope you’re convinced by now!</h2>
-            <p>Let the computer do more for you.</p>
-            <p>Start netting and stop squashing.</p>
-            <p>Resources links & feedback form:</p>
-            <QR
-              input="https://forms.gle/esDgbS1gR8FwqnyT6"
-              correction="M"
-              size={480}
-            />
+            <h2>
+              Start <strong>netting</strong>…
+            </h2>
+            <ul>
+              <li>
+                … and stop <strong>squashing</strong>!
+              </li>
+              <li>Resources links & feedback form:</li>
+            </ul>
+            <QR input={input} correction="M" size={480} />
           </>
         )}
       </main>
