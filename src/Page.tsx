@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { HometrackLogo } from "./hometrack";
 import { Todos } from "./Todos";
@@ -7,14 +7,15 @@ import { QR } from "./qr";
 const slides = ["intro", "demo", "recap"] as const;
 
 export function Page() {
-  const [debug, setDebug] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState<(typeof slides)[number]>(
-    slides[0],
+  const [currentSlide, setCurrentSlide] = useState(
+    slides.find((slide) => slide === window.location.pathname.slice(1)) ??
+      "intro",
   );
 
-  if (!debug) {
-    console.clear();
-  }
+  useEffect(() => {
+    history.pushState(null, "", `/${currentSlide}`);
+  }, [currentSlide]);
+
   return (
     <>
       <header>
@@ -25,6 +26,7 @@ export function Page() {
         >
           <HometrackLogo />
         </a>
+        <hr />
         {slides.map((slide) => (
           <button
             key={slide}
@@ -40,16 +42,6 @@ export function Page() {
             {slide}
           </button>
         ))}
-        <label>
-          <input
-            type="checkbox"
-            checked={debug}
-            onChange={({ target: { checked } }) => {
-              setDebug(checked);
-            }}
-          />{" "}
-          debug
-        </label>
       </header>
       <main>
         <div className="intro">
@@ -63,7 +55,7 @@ export function Page() {
             input="https://forms.gle/esDgbS1gR8FwqnyT6"
             correction="M"
             size={80}
-            colour={currentSlide === "recap" ? "aliceblue" : undefined}
+            colour={currentSlide === "recap" ? "var(--faded)" : undefined}
           />
         </div>
         {currentSlide === "intro" && (
@@ -77,7 +69,6 @@ export function Page() {
         )}
         {currentSlide === "demo" && (
           <Todos
-            debug={debug}
             initialDisplay={{
               low: false,
               medium: true,

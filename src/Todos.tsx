@@ -7,18 +7,12 @@ const priorities = ["low", "medium", "high"];
 export function Todos({
   initialTodos,
   initialDisplay,
-  debug,
 }: {
   initialTodos: Todo[];
   initialDisplay: Record<Todo["priority"], boolean>;
-  debug: boolean;
 }) {
   const [todos, setTodos] = useState(initialTodos);
   const [display, setDisplay] = useState(initialDisplay);
-
-  if (debug) {
-    console.debug({ todos, display });
-  }
 
   return (
     <>
@@ -79,11 +73,7 @@ export function Todos({
                       <Todo
                         key={todo.id}
                         todo={todo}
-                        debug={debug}
                         update={(updated) => {
-                          if (!debug) {
-                            console.debug({ todo, next: updated });
-                          }
                           setTodos((todos) => {
                             const index = todos.findIndex(
                               ({ id }) => id === todo.id,
@@ -114,17 +104,11 @@ interface Todo {
 
 function Todo({
   todo,
-  debug,
   update,
 }: {
   todo: Todo;
-  debug: boolean;
   update: (updated: Todo) => void;
 }) {
-  if (debug) {
-    console.log("todo", todo);
-  }
-
   const { prev, next } = getPrevNext(todo.status);
 
   return (
