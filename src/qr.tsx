@@ -28,6 +28,7 @@ export function QR({
     >
       {positions.map(({ x, y }) => (
         <div
+          key={[x, y].join(",")}
           style={{
             gridColumnStart: x + 1,
             gridRowStart: y + 1,

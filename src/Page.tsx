@@ -27,6 +27,7 @@ export function Page() {
         </a>
         {slides.map((slide) => (
           <button
+            key={slide}
             disabled={slide === currentSlide}
             onClick={() => {
               document.startViewTransition(() => {
