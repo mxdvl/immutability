@@ -5,8 +5,8 @@
     font-weight: 400;
 
     color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    color: light-dark(rgba(0, 24, 36, 0.84), rgba(255, 248, 255, 0.84));
+    background-color: light-dark(#fff, #242424);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -15,16 +15,21 @@
 
     scrollbar-gutter: stable both-edges;
 
-    --faded: light-dark(aliceblue, #346);
+    --accent: #24fc89;
+    --contrast: #325;
+    --hover: light-dark(#2b9, #2b3);
+    --interact: light-dark(#efe, #325);
+    --card: light-dark(#eee, #333);
 }
 
 a {
     font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 a:hover {
-    color: #535bf2;
+    color: var(--hover);
 }
 
 body {
@@ -49,9 +54,13 @@ header {
     align-items: center;
     gap: 1rem;
 
-    button:disabled {
-        background-color: #646cff;
-        color: #eee;
+    hr {
+        border: none;
+    }
+
+    button.active {
+        background-color: var(--accent);
+        color: var(--contrast);
     }
 }
 
@@ -62,8 +71,18 @@ header {
     height: 80px;
 }
 
-ul li {
-    padding-top: 1rem;
+ul {
+    margin: 1rem 0;
+    padding-left: 1rem;
+
+    li {
+        padding-left: 0.5rem;
+        list-style-type: "– ";
+    }
+
+    li + li {
+        margin-top: 1rem;
+    }
 }
 
 h1 {
@@ -97,24 +116,25 @@ button {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
+    background-color: var(--card);
+    /*cursor: pointer;*/
     transition: border-color 0.25s;
-    accent-color: #646cff;
+    accent-color: var(--accent);
+
     &:disabled {
         cursor: not-allowed;
     }
     &:hover:not(:disabled) {
-        border-color: #646cff;
+        border-color: var(--accent);
     }
     &:focus,
     &:focus-visible {
-        outline: 4px auto -webkit-focus-ring-color;
+        outline: 4px auto var(--hover);
     }
 }
 
 input {
-    accent-color: #646cff;
+    accent-color: var(--accent);
 
     label:has(&) {
         cursor: pointer;
@@ -129,9 +149,11 @@ input {
 }
 
 fieldset {
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 2px solid light-dark(#f0f0f0, #1a1a1a);
+    padding: 0;
+    margin: 0;
+    border: none;
+    /*border-radius: 4px;*/
+    /*border: 2px solid var(--card);*/
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -139,14 +161,14 @@ fieldset {
     hr {
         border: none;
         flex-grow: 1;
-        border-top: 2px solid light-dark(#f0f0f0, #1a1a1a);
+        border-top: 2px solid var(--card);
     }
 
     .count {
         font-variant-numeric: tabular-nums;
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
-        background-color: light-dark(#f9f9f9, #1a1a1a);
+        background-color: var(--card);
     }
 }
 
@@ -174,30 +196,41 @@ fieldset {
 
         gap: 1em;
 
+        h4 {
+            font-size: 1rem;
+            font-weight: inherit;
+            line-height: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+
         &[data-status="todo"] {
             animation-name: bounce, appear;
         }
 
         &[data-status="done"] {
-            text-decoration: line-through;
-            opacity: 0.6;
+            opacity: 0.72;
+
+            h4 {
+                text-decoration: line-through;
+            }
         }
 
         &[data-priority="low"] {
-            border-color: light-dark(aliceblue, darkslateblue);
+            border-color: var(--card);
         }
 
         &[data-priority="high"] {
-            border-color: light-dark(orange, darkorange);
-
-            input {
-                accent-color: light-dark(orange, darkorange);
-            }
+            border-color: var(--accent);
         }
 
         .control {
             display: flex;
             justify-content: space-between;
+
+            label:has([type="radio"]:not(:checked)) {
+                opacity: 0.72;
+            }
         }
     }
 }
@@ -213,19 +246,6 @@ fieldset {
 
 @keyframes appear {
     from {
-        color: light-dark(purple, pink);
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
-    a:hover {
-        color: #747bff;
-    }
-    button {
-        background-color: #f9f9f9;
+        color: var(--contrast);
     }
 }

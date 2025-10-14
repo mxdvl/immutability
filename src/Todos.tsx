@@ -120,7 +120,7 @@ function Todo({
       data-priority={todo.priority}
     >
       <div className="control">
-        {todo.title}
+        <h4>{todo.title}</h4>
         <button
           onClick={() => {
             const title = prompt("Rename", todo.title)?.trim();

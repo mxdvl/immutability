@@ -33,7 +33,7 @@ export function Page() {
         {slides.map((slide) => (
           <button
             key={slide}
-            disabled={slide === currentSlide}
+            className={slide === currentSlide ? "active" : undefined}
             onClick={() => {
               document.startViewTransition(() => {
                 flushSync(() => {
