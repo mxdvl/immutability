@@ -13,9 +13,15 @@ export default defineConfig([
       js.configs.recommended,
       tseslint.configs.strictTypeChecked,
       tseslint.configs.stylisticTypeChecked,
-      reactHooks.configs.flat["recommended-latest"], // is this correct?
+      reactHooks.configs.flat["recommended-latest"],
       reactRefresh.configs.vite,
     ],
+    rules: {
+      "@typescript-eslint/prefer-readonly-parameter-types": [
+        "off", // TODO: enable
+        { ignoreInferredTypes: true },
+      ],
+    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
