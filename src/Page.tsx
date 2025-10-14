@@ -54,12 +54,9 @@ export function Page() {
               Immutability
             </a>
           </h1>
-          <QR
-            input={input}
-            correction="M"
-            size={80}
-            colour={currentSlide === "recap" ? "var(--faded)" : undefined}
-          />
+          {currentSlide === "demo" && (
+            <QR input={input} correction="M" size={80} />
+          )}
         </div>
         {currentSlide === "intro" && (
           <>
@@ -74,6 +71,7 @@ export function Page() {
               </li>
               <li>Code on Github</li>
             </ul>
+            <QR input={input} correction="M" size={480} />
           </>
         )}
         {currentSlide === "demo" && (

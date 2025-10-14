@@ -24,6 +24,7 @@ export function QR({
         height: size,
         gridAutoColumns: "1fr",
         gridAutoRows: "1fr",
+        viewTransitionName: "qr",
       }}
     >
       {positions.map(({ x, y }) => (
