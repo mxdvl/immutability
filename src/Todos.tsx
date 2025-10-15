@@ -118,6 +118,7 @@ function Todo({
       className="todo"
       data-status={todo.status}
       data-priority={todo.priority}
+      style={{ viewTransitionName: todo.id }}
     >
       <div className="control">
         <h4>{todo.title}</h4>
