@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { uuidv7 } from "uuidv7";
+import { withTransition } from "./viewTransitions";
 
 const statuses = ["todo", "doing", "done"] as const;
 const priorities = ["low", "medium", "high"] as const;
@@ -72,11 +73,13 @@ export function Todos({
                         key={todo.id}
                         todo={todo}
                         update={(updated) => {
-                          setTodos((todos) =>
-                            todos.map((todo) =>
-                              todo.id === updated.id ? updated : todo,
-                            ),
-                          );
+                          withTransition(() => {
+                            setTodos((todos) =>
+                              todos.map((todo) =>
+                                todo.id === updated.id ? updated : todo,
+                              ),
+                            );
+                          });
                         }}
                       />,
                     ]
@@ -114,6 +117,7 @@ function Todo({
       className="todo"
       data-status={todo.status}
       data-priority={todo.priority}
+      style={{ viewTransitionName: todo.id }}
     >
       <div className="control">
         <h4>{todo.title}</h4>
