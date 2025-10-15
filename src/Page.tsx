@@ -60,14 +60,22 @@ export function Page() {
           <>
             <h2>Hi, I’m Max Duval – @mxdvl</h2>
             <ul>
-              <li>React &lt;3 Functional Programming</li>
+              <li>
+                React &lt;3{" "}
+                <a href="https://react.dev/learn/keeping-components-pure">
+                  Functional Programming
+                </a>
+              </li>
               <li>
                 Stop <strong>squashing</strong> bugs…
               </li>
               <li>
                 …start <strong>netting</strong> instead!
               </li>
-              <li>Code on Github</li>
+              <li>
+                Code{" "}
+                <a href="https://github.com/mxdvl/immutability">on Github</a>
+              </li>
             </ul>
             <QR input={input} correction="M" size={300} />
           </>
