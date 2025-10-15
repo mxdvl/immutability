@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { flushSync } from "react-dom";
 import { HometrackLogo } from "./hometrack";
 import { Todos } from "./Todos";
 import { QR } from "./qr";
+import { withTransition } from "./viewTransitions";
 
 const slides = ["intro", "demo", "recap"] as const;
 
@@ -35,10 +35,8 @@ export function Page() {
             key={slide}
             className={slide === currentSlide ? "active" : undefined}
             onClick={() => {
-              document.startViewTransition(() => {
-                flushSync(() => {
-                  setCurrentSlide(slide);
-                });
+              withTransition(() => {
+                setCurrentSlide(slide);
               });
             }}
           >
