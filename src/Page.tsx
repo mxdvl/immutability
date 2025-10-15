@@ -69,7 +69,7 @@ export function Page() {
               </li>
               <li>Code on Github</li>
             </ul>
-            <QR input={input} correction="M" size={480} />
+            <QR input={input} correction="M" size={300} />
           </>
         )}
         {currentSlide === "demo" && (
@@ -118,7 +118,7 @@ export function Page() {
               </li>
               <li>Resources links & feedback form:</li>
             </ul>
-            <QR input={input} correction="M" size={480} />
+            <QR input={input} correction="M" size={420} />
           </>
         )}
       </main>
