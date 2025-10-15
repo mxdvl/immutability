@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { uuidv7 } from "uuidv7";
+import { withTransition } from "./viewTransitions";
 
-const statuses = ["todo", "doing", "done"];
-const priorities = ["low", "medium", "high"];
+const statuses = ["todo", "doing", "done"] as const;
+const priorities = ["low", "medium", "high"] as const;
 
 export function Todos({
   initialTodos,
   initialDisplay,
-}: {
-  initialTodos: Todo[];
-  initialDisplay: Record<Todo["priority"], boolean>;
-}) {
+}: Readonly<{
+  initialTodos: readonly Todo[];
+  initialDisplay: Readonly<Record<Todo["priority"], boolean>>;
+}>) {
   const [todos, setTodos] = useState(initialTodos);
   const [display, setDisplay] = useState(initialDisplay);
 
@@ -23,15 +24,14 @@ export function Todos({
             const title = prompt("Title?")?.trim();
             if (!title) return;
 
-            setTodos((todos) => {
-              todos.push({
+            setTodos((todos) =>
+              todos.concat({
                 id: `uuid-${uuidv7()}`,
                 title,
                 status: "todo",
                 priority: "medium",
-              });
-              return todos;
-            });
+              }),
+            );
           }}
         >
           add todo
@@ -44,8 +44,7 @@ export function Todos({
               checked={display[priority]}
               onChange={({ target: { checked } }) => {
                 setDisplay((previous) => {
-                  previous[priority] = checked;
-                  return previous;
+                  return { ...previous, [priority]: checked };
                 });
               }}
             />
@@ -74,12 +73,12 @@ export function Todos({
                         key={todo.id}
                         todo={todo}
                         update={(updated) => {
-                          setTodos((todos) => {
-                            const index = todos.findIndex(
-                              ({ id }) => id === todo.id,
+                          withTransition(() => {
+                            setTodos((todos) =>
+                              todos.map((todo) =>
+                                todo.id === updated.id ? updated : todo,
+                              ),
                             );
-                            todos.splice(index, 1, updated);
-                            return todos;
                           });
                         }}
                       />,
@@ -96,19 +95,19 @@ export function Todos({
 
 interface Todo {
   /** must be unique & valid [`<custom-ident>`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident#forbidden_values) */
-  id: `uuid-${string}`;
-  title: string;
-  status: (typeof statuses)[number];
-  priority: (typeof priorities)[number];
+  readonly id: `uuid-${string}`;
+  readonly title: string;
+  readonly status: (typeof statuses)[number];
+  readonly priority: (typeof priorities)[number];
 }
 
 function Todo({
   todo,
   update,
-}: {
+}: Readonly<{
   todo: Todo;
   update: (updated: Todo) => void;
-}) {
+}>) {
   const { prev, next } = getPrevNext(todo.status);
 
   return (
@@ -126,8 +125,7 @@ function Todo({
           onClick={() => {
             const title = prompt("Rename", todo.title)?.trim();
             if (!title) return;
-            todo.title = title;
-            update(todo);
+            update({ ...todo, title });
           }}
         >
           ✎
@@ -142,8 +140,7 @@ function Todo({
               checked={todo.priority === priority}
               onChange={({ target: { checked } }) => {
                 if (!checked) return;
-                todo.priority = priority;
-                update(todo);
+                update({ ...todo, priority });
               }}
             />
             {priority}
@@ -155,8 +152,7 @@ function Todo({
           disabled={!prev}
           onClick={() => {
             if (!prev) return;
-            todo.status = prev;
-            update(todo);
+            update({ ...todo, status: prev });
           }}
         >
           ←
@@ -165,8 +161,7 @@ function Todo({
           disabled={!next}
           onClick={() => {
             if (!next) return;
-            todo.status = next;
-            update(todo);
+            update({ ...todo, status: next });
           }}
         >
           →

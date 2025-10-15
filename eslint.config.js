@@ -18,7 +18,7 @@ export default defineConfig([
     ],
     rules: {
       "@typescript-eslint/prefer-readonly-parameter-types": [
-        "off", // TODO: enable
+        "error", // TODO: enable
         { ignoreInferredTypes: true },
       ],
     },
